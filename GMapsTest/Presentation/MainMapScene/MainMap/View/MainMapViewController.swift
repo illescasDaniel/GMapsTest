@@ -113,6 +113,9 @@ class MainMapViewController: UIViewController {
 				
 				guard let places = (try? $0.get())?.mapResource else { return }
 				
+				// x,y vs lon,lat ???
+				// let placesWithCoordinates = places.filter { $0.mapCoordinate != nil }
+				
 				// todo
 				let first10Places = places.count > 10 ? Array(places[0..<10]) : places
 				
