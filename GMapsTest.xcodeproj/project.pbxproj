@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		6585C69123A93F6200130712 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69023A93F6200130712 /* AppDelegate.swift */; };
 		6585C69323A93F6200130712 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69223A93F6200130712 /* SceneDelegate.swift */; };
-		6585C69523A93F6200130712 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69423A93F6200130712 /* ViewController.swift */; };
-		6585C69823A93F6200130712 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6585C69623A93F6200130712 /* Main.storyboard */; };
 		6585C69A23A93F6600130712 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6585C69923A93F6600130712 /* Assets.xcassets */; };
 		6585C69D23A93F6600130712 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6585C69B23A93F6600130712 /* LaunchScreen.storyboard */; };
 		6585C6A823A93F6600130712 /* GMapsTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6A723A93F6600130712 /* GMapsTestTests.swift */; };
@@ -20,12 +18,15 @@
 		6585C6C223A94BB200130712 /* AF+NetworkRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6C123A94BB200130712 /* AF+NetworkRequestBuilder.swift */; };
 		6585C6C823A9512A00130712 /* MapResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6C723A9512A00130712 /* MapResourcesRepository.swift */; };
 		6585C6CA23A951B700130712 /* MapFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6C923A951B700130712 /* MapFrame.swift */; };
-		6585C6CC23A951DD00130712 /* MapCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6CB23A951DD00130712 /* MapCoordinate.swift */; };
 		6585C6CF23A9528000130712 /* MapResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6CE23A9528000130712 /* MapResource.swift */; };
 		6585C6D823A954B900130712 /* MapResource+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6D723A954B900130712 /* MapResource+Decodable.swift */; };
 		6585C6DA23A95F9800130712 /* MapResourceEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6D923A95F9800130712 /* MapResourceEndpoint.swift */; };
 		6585C6DE23A962AD00130712 /* DefaultMapResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6DD23A962AD00130712 /* DefaultMapResourcesRepository.swift */; };
 		6585C6E023A9653300130712 /* MapResourcesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6DF23A9653300130712 /* MapResourcesUseCase.swift */; };
+		6585C6E623AA873700130712 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6E523AA873700130712 /* MainMapViewController.swift */; };
+		6585C6ED23AA876000130712 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6585C6EB23AA876000130712 /* Main.storyboard */; };
+		6585C6EF23AA878900130712 /* MainMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6EE23AA878900130712 /* MainMapViewModel.swift */; };
+		6585C6F523AA8AAD00130712 /* MapSceneDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6F423AA8AAD00130712 /* MapSceneDependencies.swift */; };
 		7AC710750B79C0235923D948 /* Pods_GMapsTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA03D1013492755365FBBD37 /* Pods_GMapsTestTests.framework */; };
 		CB240EE56E4950F980EF92DF /* Pods_GMapsTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AEA5C0C61E99AA3AFC5119F /* Pods_GMapsTest.framework */; };
 /* End PBXBuildFile section */
@@ -45,8 +46,6 @@
 		6585C68D23A93F6200130712 /* GMapsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GMapsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6585C69023A93F6200130712 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6585C69223A93F6200130712 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6585C69423A93F6200130712 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		6585C69723A93F6200130712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6585C69923A93F6600130712 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6585C69C23A93F6600130712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6585C69E23A93F6600130712 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,12 +58,15 @@
 		6585C6C123A94BB200130712 /* AF+NetworkRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AF+NetworkRequestBuilder.swift"; sourceTree = "<group>"; };
 		6585C6C723A9512A00130712 /* MapResourcesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResourcesRepository.swift; sourceTree = "<group>"; };
 		6585C6C923A951B700130712 /* MapFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFrame.swift; sourceTree = "<group>"; };
-		6585C6CB23A951DD00130712 /* MapCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinate.swift; sourceTree = "<group>"; };
 		6585C6CE23A9528000130712 /* MapResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResource.swift; sourceTree = "<group>"; };
 		6585C6D723A954B900130712 /* MapResource+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapResource+Decodable.swift"; sourceTree = "<group>"; };
 		6585C6D923A95F9800130712 /* MapResourceEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResourceEndpoint.swift; sourceTree = "<group>"; };
 		6585C6DD23A962AD00130712 /* DefaultMapResourcesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMapResourcesRepository.swift; sourceTree = "<group>"; };
 		6585C6DF23A9653300130712 /* MapResourcesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResourcesUseCase.swift; sourceTree = "<group>"; };
+		6585C6E523AA873700130712 /* MainMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMapViewController.swift; path = GMapsTest/Presentation/MainMapScene/MainMap/View/MainMapViewController.swift; sourceTree = SOURCE_ROOT; };
+		6585C6EC23AA876000130712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GMapsTest/Presentation/MainMapScene/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		6585C6EE23AA878900130712 /* MainMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMapViewModel.swift; path = GMapsTest/Presentation/MainMapScene/MainMap/ViewModel/MainMapViewModel.swift; sourceTree = SOURCE_ROOT; };
+		6585C6F423AA8AAD00130712 /* MapSceneDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSceneDependencies.swift; sourceTree = "<group>"; };
 		6967D777BEE62BECC973520E /* Pods-GMapsTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GMapsTest.release.xcconfig"; path = "Target Support Files/Pods-GMapsTest/Pods-GMapsTest.release.xcconfig"; sourceTree = "<group>"; };
 		7CD49F6BDEDE19790A9E144D /* Pods-GMapsTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GMapsTestTests.release.xcconfig"; path = "Target Support Files/Pods-GMapsTestTests/Pods-GMapsTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		9FA3C87A1A42A84444085FB0 /* Pods-GMapsTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GMapsTestTests.debug.xcconfig"; path = "Target Support Files/Pods-GMapsTestTests/Pods-GMapsTestTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,9 +131,7 @@
 				6585C6B623A9413300130712 /* Data */,
 				6585C6B323A9409200130712 /* Networking */,
 				6585C6B723A9414700130712 /* Common */,
-				6585C69023A93F6200130712 /* AppDelegate.swift */,
-				6585C69223A93F6200130712 /* SceneDelegate.swift */,
-				6585C69623A93F6200130712 /* Main.storyboard */,
+				6585C6E323AA862B00130712 /* Application */,
 				6585C69923A93F6600130712 /* Assets.xcassets */,
 				6585C69B23A93F6600130712 /* LaunchScreen.storyboard */,
 				6585C69E23A93F6600130712 /* Info.plist */,
@@ -171,7 +171,9 @@
 		6585C6B523A9412D00130712 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				6585C6BE23A94B0500130712 /* MainMap */,
+				6585C6E423AA866000130712 /* Supporting views */,
+				6585C6E223AA861000130712 /* Utils */,
+				6585C6BE23A94B0500130712 /* MapScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -194,19 +196,19 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		6585C6BE23A94B0500130712 /* MainMap */ = {
+		6585C6BE23A94B0500130712 /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				6585C6C023A94B1500130712 /* ViewModel */,
-				6585C6BF23A94B0F00130712 /* View */,
+				6585C6EB23AA876000130712 /* Main.storyboard */,
+				6585C6E123AA85EF00130712 /* MainMap */,
 			);
-			path = MainMap;
+			path = MapScene;
 			sourceTree = "<group>";
 		};
 		6585C6BF23A94B0F00130712 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6585C69423A93F6200130712 /* ViewController.swift */,
+				6585C6E523AA873700130712 /* MainMapViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -214,6 +216,7 @@
 		6585C6C023A94B1500130712 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				6585C6EE23AA878900130712 /* MainMapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -222,7 +225,6 @@
 			isa = PBXGroup;
 			children = (
 				6585C6C923A951B700130712 /* MapFrame.swift */,
-				6585C6CB23A951DD00130712 /* MapCoordinate.swift */,
 				6585C6CE23A9528000130712 /* MapResource.swift */,
 			);
 			path = Entities;
@@ -290,6 +292,47 @@
 			children = (
 			);
 			path = PersistentStorage;
+			sourceTree = "<group>";
+		};
+		6585C6E123AA85EF00130712 /* MainMap */ = {
+			isa = PBXGroup;
+			children = (
+				6585C6C023A94B1500130712 /* ViewModel */,
+				6585C6BF23A94B0F00130712 /* View */,
+			);
+			path = MainMap;
+			sourceTree = "<group>";
+		};
+		6585C6E223AA861000130712 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		6585C6E323AA862B00130712 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				6585C6F223AA8A9000130712 /* Dependencies */,
+				6585C69023A93F6200130712 /* AppDelegate.swift */,
+				6585C69223A93F6200130712 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		6585C6E423AA866000130712 /* Supporting views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Supporting views";
+			sourceTree = "<group>";
+		};
+		6585C6F223AA8A9000130712 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				6585C6F423AA8AAD00130712 /* MapSceneDependencies.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		8F3320363F293E2471E36FDC /* Pods */ = {
@@ -388,9 +431,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6585C6ED23AA876000130712 /* Main.storyboard in Resources */,
 				6585C69D23A93F6600130712 /* LaunchScreen.storyboard in Resources */,
 				6585C69A23A93F6600130712 /* Assets.xcassets in Resources */,
-				6585C69823A93F6200130712 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,11 +532,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6585C6EF23AA878900130712 /* MainMapViewModel.swift in Sources */,
 				6585C6CA23A951B700130712 /* MapFrame.swift in Sources */,
-				6585C69523A93F6200130712 /* ViewController.swift in Sources */,
 				6585C6DE23A962AD00130712 /* DefaultMapResourcesRepository.swift in Sources */,
 				6585C6DA23A95F9800130712 /* MapResourceEndpoint.swift in Sources */,
-				6585C6CC23A951DD00130712 /* MapCoordinate.swift in Sources */,
 				6585C6C223A94BB200130712 /* AF+NetworkRequestBuilder.swift in Sources */,
 				6585C6E023A9653300130712 /* MapResourcesUseCase.swift in Sources */,
 				6585C69123A93F6200130712 /* AppDelegate.swift in Sources */,
@@ -503,6 +545,8 @@
 				6585C6B923A9433400130712 /* BetterLogger.swift in Sources */,
 				6585C6C823A9512A00130712 /* MapResourcesRepository.swift in Sources */,
 				6585C6D823A954B900130712 /* MapResource+Decodable.swift in Sources */,
+				6585C6F523AA8AAD00130712 /* MapSceneDependencies.swift in Sources */,
+				6585C6E623AA873700130712 /* MainMapViewController.swift in Sources */,
 				6585C6BB23A9436700130712 /* NetworkRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,20 +570,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6585C69623A93F6200130712 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6585C69723A93F6200130712 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6585C69B23A93F6600130712 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6585C69C23A93F6600130712 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6585C6EB23AA876000130712 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6585C6EC23AA876000130712 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

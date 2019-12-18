@@ -11,11 +11,11 @@ import Alamofire
 
 protocol MapResourcesUseCase {
 	func execute(
-		requestValue: MapResourcesUseCaseValue,
+		requestValue: MapResourcesUseCaseInput,
 		completionHandler: @escaping (Result<MapResource, AFError>) -> Void
 	)
 }
-struct DefaultMapResourcesUseCase {
+struct DefaultMapResourcesUseCase: MapResourcesUseCase {
 	
 	private let mapResourcesRepository: MapResourcesRepository
 	
@@ -24,7 +24,7 @@ struct DefaultMapResourcesUseCase {
 	}
 	
 	func execute(
-		requestValue: MapResourcesUseCaseValue,
+		requestValue: MapResourcesUseCaseInput,
 		completionHandler: @escaping (Result<MapResource, AFError>) -> Void
 	) {
 		mapResourcesRepository.resources(
@@ -34,6 +34,6 @@ struct DefaultMapResourcesUseCase {
 	}
 }
 
-struct MapResourcesUseCaseValue {
+struct MapResourcesUseCaseInput {
 	let mapFrame: MapFrame
 }

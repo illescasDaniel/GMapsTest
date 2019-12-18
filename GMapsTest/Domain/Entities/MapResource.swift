@@ -19,8 +19,8 @@ extension MapResource {
 		let id: String
 		let placeName: String
 		
-		let x, y: Double
-		let mapCoordinate: MapCoordinate?
+		let x, y: Double // what's the difference between mapCoordinate??
+		let mapCoordinate: LocationCoordinate?
 		
 		let companyZoneID: Int // zone ID
 		

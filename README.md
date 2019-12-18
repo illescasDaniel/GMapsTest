@@ -10,3 +10,7 @@ A test app for google maps API.
 3. [Get Google maps SDK API key](https://developers.google.com/maps/documentation/ios-sdk/start)
 4. Download the project, run `pod install`, you'll be asked for a key, the **google maps key**.
 5. Open Xcode & run
+
+### Extra
+- Architecture: based on Clean Architecture with MVVM (https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)
+- JSON to initial response model: https://app.quicktype.io

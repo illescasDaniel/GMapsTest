@@ -7,8 +7,17 @@
 //
 
 import Foundation
+import struct CoreLocation.CLLocationCoordinate2D
+
+typealias LocationCoordinate = CLLocationCoordinate2D
+
+extension LocationCoordinate: Equatable {
+	public static func ==(lhs: Self, rhs: Self) -> Bool {
+		return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+	}
+}
 
 struct MapFrame {
-	let lowerLeft: MapCoordinate
-	let upperRight: MapCoordinate
+	let lowerLeft: LocationCoordinate
+	let upperRight: LocationCoordinate
 }
