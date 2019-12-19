@@ -18,7 +18,7 @@ extension MapResource.Element: Decodable {
 	
 	private enum CodingKeys: String, CodingKey {
 		case id
-		case placeName = "name"
+		case name
 		case x, y
 		case companyZoneID = "companyZoneId"
 		case longitude = "lon", latitude = "lat"
@@ -39,7 +39,7 @@ extension MapResource.Element: Decodable {
 		}
 		
 		self.id = try decode(forKey: .id)
-		self.placeName = try decode(forKey: .placeName)
+		self.name = try decode(forKey: .name)
 		
 		self.x = try decode(forKey: .x)
 		self.y = try decode(forKey: .y)

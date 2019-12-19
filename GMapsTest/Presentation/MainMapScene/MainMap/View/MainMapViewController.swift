@@ -63,6 +63,7 @@ class MainMapViewController: UIViewController {
 		
 		let camera = GMSCameraPosition.camera(withLatitude: lisboa.latitude, longitude: lisboa.longitude, zoom: 13)
 		mapView.camera = camera
+		mapView.delegate = self
 	}
 	
 	private func setupGoogleMaps() {
@@ -111,23 +112,22 @@ class MainMapViewController: UIViewController {
 			)),
 			completionHandler: {
 				
-				guard let places = (try? $0.get())?.mapResource else { return }
+				guard let mapResources = (try? $0.get())?.mapResource else { return }
 				
 				// x,y vs lon,lat ???
 				// let placesWithCoordinates = places.filter { $0.mapCoordinate != nil }
 				
 				// todo
-				let first10Places = places.count > 10 ? Array(places[0..<10]) : places
+				let first10MapResources = mapResources.count > 10 ? Array(mapResources[0..<10]) : mapResources
 				
-				DispatchQueue.concurrentPerform(iterations: first10Places.count) { (index) in
+				DispatchQueue.concurrentPerform(iterations: first10MapResources.count) { (index) in
 					DispatchQueue.main.async {
-						let place = first10Places[index]
-						let position = CLLocationCoordinate2D(latitude: place.y, longitude: place.x)
+						let mapResource = first10MapResources[index]
+						let position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
 						guard !self.markers.contains(where: { $0.position == position}) else { return }
 						let marker = GMSMarker()
-						marker.position = CLLocationCoordinate2D(latitude: place.y, longitude: place.x)
-						marker.title = place.placeName
-						//marker.map = self.mapView
+						marker.position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
+						self.setupMarkerInfo(marker: marker, mapResource: mapResource)
 						newMarkers.append(marker)
 					}
 				}
@@ -142,6 +142,11 @@ class MainMapViewController: UIViewController {
 				}
 			}
 		)
+	}
+	
+	private func setupMarkerInfo(marker: GMSMarker, mapResource: MapResource.Element) {
+		marker.title = mapResource.name
+		
 	}
 }
 
@@ -227,5 +232,11 @@ extension MainMapViewController: CLLocationManagerDelegate {
 		]))
 		
 		self.currentLocationLabel.attributedText = attributedString
+	}
+}
+
+extension MainMapViewController: GMSMapViewDelegate {
+	func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+		return MarkerDetailView.create(title: marker.title ?? "?", subtitle: "?")
 	}
 }

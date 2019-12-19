@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6516416D23ABD97D0086DF82 /* MarkerDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6516416B23ABD97D0086DF82 /* MarkerDetailView.xib */; };
+		6516416E23ABD97D0086DF82 /* MarkerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516416C23ABD97D0086DF82 /* MarkerDetailView.swift */; };
 		6585C69123A93F6200130712 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69023A93F6200130712 /* AppDelegate.swift */; };
 		6585C69323A93F6200130712 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69223A93F6200130712 /* SceneDelegate.swift */; };
 		6585C69A23A93F6600130712 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6585C69923A93F6600130712 /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		3AEA5C0C61E99AA3AFC5119F /* Pods_GMapsTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GMapsTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6516416B23ABD97D0086DF82 /* MarkerDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkerDetailView.xib; sourceTree = "<group>"; };
+		6516416C23ABD97D0086DF82 /* MarkerDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerDetailView.swift; sourceTree = "<group>"; };
 		6585C68D23A93F6200130712 /* GMapsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GMapsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6585C69023A93F6200130712 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6585C69223A93F6200130712 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +105,24 @@
 				FA03D1013492755365FBBD37 /* Pods_GMapsTestTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6516416923ABD97D0086DF82 /* Supporting views */ = {
+			isa = PBXGroup;
+			children = (
+				6516416A23ABD97D0086DF82 /* MarkerDetailView */,
+			);
+			name = "Supporting views";
+			path = "GMapsTest/Presentation/MainMapScene/MainMap/Supporting views";
+			sourceTree = SOURCE_ROOT;
+		};
+		6516416A23ABD97D0086DF82 /* MarkerDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				6516416B23ABD97D0086DF82 /* MarkerDetailView.xib */,
+				6516416C23ABD97D0086DF82 /* MarkerDetailView.swift */,
+			);
+			path = MarkerDetailView;
 			sourceTree = "<group>";
 		};
 		6585C68423A93F6200130712 = {
@@ -297,6 +319,7 @@
 		6585C6E123AA85EF00130712 /* MainMap */ = {
 			isa = PBXGroup;
 			children = (
+				6516416923ABD97D0086DF82 /* Supporting views */,
 				6585C6C023A94B1500130712 /* ViewModel */,
 				6585C6BF23A94B0F00130712 /* View */,
 			);
@@ -432,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6585C6ED23AA876000130712 /* Main.storyboard in Resources */,
+				6516416D23ABD97D0086DF82 /* MarkerDetailView.xib in Resources */,
 				6585C69D23A93F6600130712 /* LaunchScreen.storyboard in Resources */,
 				6585C69A23A93F6600130712 /* Assets.xcassets in Resources */,
 			);
@@ -541,6 +565,7 @@
 				6585C69123A93F6200130712 /* AppDelegate.swift in Sources */,
 				6585C6BD23A947E600130712 /* NetworkRequestBuilderError.swift in Sources */,
 				6585C69323A93F6200130712 /* SceneDelegate.swift in Sources */,
+				6516416E23ABD97D0086DF82 /* MarkerDetailView.swift in Sources */,
 				6585C6CF23A9528000130712 /* MapResource.swift in Sources */,
 				6585C6B923A9433400130712 /* BetterLogger.swift in Sources */,
 				6585C6C823A9512A00130712 /* MapResourcesRepository.swift in Sources */,

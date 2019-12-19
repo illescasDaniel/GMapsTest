@@ -17,7 +17,7 @@ extension MapResource {
 	struct Element {
 		
 		let id: String
-		let placeName: String
+		let name: String
 		
 		let x, y: Double // what's the difference between mapCoordinate??
 		let mapCoordinate: LocationCoordinate?
