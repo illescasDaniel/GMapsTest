@@ -20,7 +20,7 @@ class MarkerDetailView: UIView {
 			return nil
 		}
 		
-		view.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+		view.backgroundColor = UIColor.white.withAlphaComponent(0.93)
 
 		let shapeLayer = CAShapeLayer()
 		shapeLayer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: .init(width: 14, height: 14)).cgPath
@@ -30,6 +30,8 @@ class MarkerDetailView: UIView {
 		view.titleLabel.numberOfLines = 3
 		view.titleLabel.adjustsFontSizeToFitWidth = true
 		view.titleLabel.minimumScaleFactor = 0.5
+
+		view.bodyLabel.backgroundColor = .clear
 
 		view.titleLabel.text = title
 		view.bodyLabel.attributedText = body

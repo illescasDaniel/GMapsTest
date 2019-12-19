@@ -86,8 +86,6 @@ class MainMapViewController: UIViewController {
 			let visibleRegionCorners = (visibleRegion.nearLeft, visibleRegion.farRight)
 			if self.lastKnownVisibleRegionCorners == nil || self.lastKnownVisibleRegionCorners! != visibleRegionCorners {
 				self.lastKnownVisibleRegionCorners = visibleRegionCorners
-				// do whatever
-				print("viewport changed!!!", visibleRegionCorners)
 				self.loadMarkers(visibleRegionCorners: visibleRegionCorners)
 			}
 		})
@@ -104,7 +102,8 @@ class MainMapViewController: UIViewController {
 	//
 	
 	// todo: filter?? make clusters?
-	
+
+	// load markers as the map viewport changes
 	private func loadMarkers(visibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)) {
 
 		var newMarkers: [GMSMarker] = []
@@ -118,15 +117,18 @@ class MainMapViewController: UIViewController {
 				
 				guard let mapResources = (try? $0.get())?.mapResource else { return }
 				
-				// x,y vs lon,lat ???
-				// let placesWithCoordinates = places.filter { $0.mapCoordinate != nil }
+				// todo: what's the difference between the service response parameters:
+				// "x","y" vs "lon","lat" parameters
+
+				// todo: just testing some resources!!, if I choose to display ALL of them it lags, because they are
+				// a lot, I'll need to use markers clustering !
+				let first10MapResources = mapResources.count > 10 ? Array(mapResources[0..<10]) : mapResources
+				let last10MapResources = mapResources.count > 10 ? Array(mapResources[(mapResources.count-10)...]) : mapResources
+				let someMapResources = first10MapResources + last10MapResources
 				
-				// todo
-				let first10MapResources = mapResources.count > 10 ? Array(mapResources[(mapResources.count-10)...]) : mapResources
-				
-				DispatchQueue.concurrentPerform(iterations: first10MapResources.count) { (index) in
+				DispatchQueue.concurrentPerform(iterations: someMapResources.count) { (index) in
 					DispatchQueue.main.async {
-						let mapResource = first10MapResources[index]
+						let mapResource = someMapResources[index]
 						let position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
 						guard !self.markers.contains(where: { $0.position == position}) else { return }
 						let marker = MapResourceMarker()
@@ -135,7 +137,7 @@ class MainMapViewController: UIViewController {
 						newMarkers.append(marker)
 					}
 				}
-				
+
 				DispatchQueue.main.async {
 					for (i, marker) in newMarkers.enumerated() {
 						DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20 * i)) {
