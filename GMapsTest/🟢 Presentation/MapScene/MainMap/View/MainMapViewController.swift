@@ -27,7 +27,14 @@ class MainMapViewController: UIViewController {
 	private var lastKnownVisibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)?
 	
 	private var observers: [NSKeyValueObservation] = []
-	
+
+	// If `companyZoneID` was a discrete value, I could easily map all possible values to different colors
+	// but I don't know all the possible values of it
+	private let markerColors: [UIColor] = [
+		.red, .green, .blue, .yellow, .brown, .cyan
+	]
+	private lazy var currentMarkerColorIterator = markerColors.makeIterator()
+	private var colorGivenACompanyZoneId: [Int: UIColor] = [:]
 	
 	// MARK: Life cycle
 	
@@ -99,10 +106,7 @@ class MainMapViewController: UIViewController {
 	// todo: filter?? make clusters?
 	
 	private func loadMarkers(visibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)) {
-		
-		//self.markers.forEach { $0.map = nil }
-		//self.markers.removeAll(keepingCapacity: true)
-		
+
 		var newMarkers: [GMSMarker] = []
 		
 		self.viewModel.fetchMapResources(
@@ -118,14 +122,14 @@ class MainMapViewController: UIViewController {
 				// let placesWithCoordinates = places.filter { $0.mapCoordinate != nil }
 				
 				// todo
-				let first10MapResources = mapResources.count > 10 ? Array(mapResources[0..<10]) : mapResources
+				let first10MapResources = mapResources.count > 10 ? Array(mapResources[(mapResources.count-10)...]) : mapResources
 				
 				DispatchQueue.concurrentPerform(iterations: first10MapResources.count) { (index) in
 					DispatchQueue.main.async {
 						let mapResource = first10MapResources[index]
 						let position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
 						guard !self.markers.contains(where: { $0.position == position}) else { return }
-						let marker = GMSMarker()
+						let marker = MapResourceMarker()
 						marker.position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
 						self.setupMarkerInfo(marker: marker, mapResource: mapResource)
 						newMarkers.append(marker)
@@ -144,9 +148,21 @@ class MainMapViewController: UIViewController {
 		)
 	}
 	
-	private func setupMarkerInfo(marker: GMSMarker, mapResource: MapResource.Element) {
+	private func setupMarkerInfo(marker: MapResourceMarker, mapResource: MapResource.Element) {
 		marker.title = mapResource.name
-		
+		marker.mapResource = mapResource
+		if let color = colorGivenACompanyZoneId[mapResource.companyZoneID] {
+			marker.icon = GMSMarker.markerImage(with: color)
+		} else {
+			var color = currentMarkerColorIterator.next()
+			if color == nil {
+				currentMarkerColorIterator = markerColors.makeIterator()
+				color = currentMarkerColorIterator.next()
+			}
+			guard let aColor = color else { return }
+			colorGivenACompanyZoneId[mapResource.companyZoneID] = aColor
+			marker.icon = GMSMarker.markerImage(with: aColor)
+		}
 	}
 }
 
@@ -236,7 +252,113 @@ extension MainMapViewController: CLLocationManagerDelegate {
 }
 
 extension MainMapViewController: GMSMapViewDelegate {
+
+	private func bold(_ string: String) -> NSAttributedString {
+		return NSAttributedString(
+			string: string,
+			attributes: [
+				.font: UIFont.preferredFont(forTextStyle: .headline)
+			]
+		)
+	}
+
+	private func normal(_ string: String) -> NSAttributedString {
+		return NSAttributedString(
+			string: string,
+			attributes: [
+				.font: UIFont.preferredFont(forTextStyle: .body)
+			]
+		)
+	}
+
 	func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-		return MarkerDetailView.create(title: marker.title ?? "?", subtitle: "?")
+		guard let marker = marker as? MapResourceMarker, let mapResource = marker.mapResource else { return nil }
+
+		var things = 0
+		let detailAttributedString = NSMutableAttributedString()
+
+		if let resourceType = mapResource.resourceType, !resourceType.isEmpty {
+			detailAttributedString.append(bold("Type: "))
+			detailAttributedString.append(normal(resourceType+"\n"))
+			things += 1
+		}
+		if let model = mapResource.model, !model.isEmpty {
+			detailAttributedString.append(bold("Model: "))
+			detailAttributedString.append(normal(model+"\n"))
+			things += 1
+		}
+		if let licencePlate = mapResource.licencePlate, !licencePlate.isEmpty {
+			detailAttributedString.append(bold("License plate: "))
+			detailAttributedString.append(normal(licencePlate+"\n"))
+			things += 1
+		}
+		if let engineType = mapResource.engineType, !engineType.isEmpty {
+			detailAttributedString.append(bold("Engine type: "))
+			detailAttributedString.append(normal(engineType+"\n"))
+			things += 1
+		}
+		if let seats = mapResource.seats {
+			detailAttributedString.append(bold("Seats: "))
+			detailAttributedString.append(normal(String(seats)+"\n"))
+			things += 1
+		}
+
+		if let station = mapResource.station {
+			detailAttributedString.append(bold("Station: "))
+			detailAttributedString.append(normal((station ? "Yes" : "No") + "\n"))
+			things += 1
+		}
+		if let availableResources = mapResource.availableResources {
+			detailAttributedString.append(bold("Available resources: "))
+			detailAttributedString.append(normal(String(availableResources)+"\n"))
+			things += 1
+		}
+		if let spacesAvailable = mapResource.spacesAvailable {
+			detailAttributedString.append(bold("Spaces available: "))
+			detailAttributedString.append(normal(String(spacesAvailable)+"\n"))
+			things += 1
+		}
+
+		if let bikesAvailable = mapResource.bikesAvailable {
+			detailAttributedString.append(bold("Bikes available: "))
+			detailAttributedString.append(normal(String(bikesAvailable)+"\n"))
+			things += 1
+		}
+
+		if let allowDropOff = mapResource.allowDropOff {
+			detailAttributedString.append(bold("Allow drop off: "))
+			detailAttributedString.append(normal((allowDropOff ? "Yes" : "No") + "\n"))
+			things += 1
+		}
+
+		if let pricePerMinuteParking = mapResource.pricePerMinuteParking {
+			detailAttributedString.append(bold("PPM Parking: "))
+			detailAttributedString.append(normal(String(pricePerMinuteParking) + "\n"))
+			things += 1
+		}
+		if let pricePerMinuteDriving = mapResource.pricePerMinuteParking {
+			detailAttributedString.append(bold("PPM Driving: "))
+			detailAttributedString.append(normal(String(pricePerMinuteDriving) + "\n"))
+			things += 1
+		}
+
+		if let helmets = mapResource.helmets {
+			detailAttributedString.append(bold("Helmets: "))
+			detailAttributedString.append(normal(String(helmets)+"\n"))
+			things += 1
+		}
+
+		let width = self.view.frame.size.width
+		let customMarkerDetailView = MarkerDetailView.create(
+			withBounds: CGRect(x: 0, y: 0, width: width > 450 ? 350 : width * 0.75, height: things < 2 ? 80 : 240),
+			title: marker.title ?? "?",
+			body: detailAttributedString
+		)
+		if things == 0 {
+			customMarkerDetailView?.bodyLabel.isHidden = true
+		} else {
+			customMarkerDetailView?.bodyLabel.isHidden = false
+		}
+		return customMarkerDetailView
 	}
 }

@@ -31,14 +31,14 @@ extension MapResource {
 		let seats: Int?
 		let model: String?
 		let realTimeData: Bool?
-		let range, betteryLevel: Int?
+		let range, batteryLevel: Int?
 		let pricePerMinuteParking, pricePerMinuteDriving: Int?
 		let helmets: Int?
 		
 		let station: Bool?
 		let availableResources, spacesAvailable: Int?
 		let bikesAvailable: Int?
-		let allowDropoff: Bool?
+		let allowDropOff: Bool?
 	}
 
 	/*enum ResourceType: String {

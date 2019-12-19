@@ -24,7 +24,9 @@ extension MapResource.Element: Decodable {
 		case longitude = "lon", latitude = "lat"
 		case licencePlate, range, batteryLevel, seats, model
 		case resourceImageID = "resourceImageId"
-		case pricePerMinuteParking, pricePerMinuteDriving, realTimeData, engineType, resourceType, helmets, station, availableResources, spacesAvailable, allowDropoff, bikesAvailable
+		case pricePerMinuteParking, pricePerMinuteDriving, realTimeData, engineType, resourceType, helmets, station, availableResources, spacesAvailable
+		case allowDropOff = "allowDropoff" 
+        case bikesAvailable
 	}
 	
 	public init(from decoder: Decoder) throws {
@@ -55,7 +57,7 @@ extension MapResource.Element: Decodable {
 		self.companyZoneID = try decode(forKey:  .companyZoneID)
 		self.licencePlate = try decodeIfPresent(forKey: .licencePlate)
 		self.range = try decodeIfPresent(forKey: .range)
-		self.betteryLevel = try decodeIfPresent(forKey: .batteryLevel)
+		self.batteryLevel = try decodeIfPresent(forKey: .batteryLevel)
 		self.seats = try decodeIfPresent(forKey: .seats)
 		self.model = try decodeIfPresent(forKey: .model)
 		self.resourceImageID = try decodeIfPresent(forKey: .resourceImageID)
@@ -71,7 +73,7 @@ extension MapResource.Element: Decodable {
 		self.availableResources = try decodeIfPresent(forKey: .availableResources)
 		self.spacesAvailable = try decodeIfPresent(forKey: .spacesAvailable)
 		self.bikesAvailable = try decodeIfPresent(forKey: .bikesAvailable)
-		self.allowDropoff = try decodeIfPresent(forKey: .allowDropoff)
+		self.allowDropOff = try decodeIfPresent(forKey: .allowDropOff)
 	}
 }
 
