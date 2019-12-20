@@ -10,6 +10,7 @@ A test app for google maps API.
 3. [Get Google maps SDK API key](https://developers.google.com/maps/documentation/ios-sdk/start)
 4. Download the project, run `pod install`, you'll be asked for a key, the **google maps key**.
 5. Open Xcode & run
+// Note: strings are automatically generated using `swiftgen`, to regenerate strings from localizables go to `generate` folder and run `swiftgen`
 
 ## Screenshots
 [Video](https://github.com/illescasDaniel/GMapsTest/blob/master/media/GMapsTest.mp4)

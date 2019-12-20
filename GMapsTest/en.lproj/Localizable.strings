@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  GMapsTest
+
+  Created by Daniel Illescas Romero on 20/12/2019.
+  Copyright © 2019 Daniel Illescas Romero. All rights reserved.
+*/
+
+"**MainMapView.place.place**" = "Place";
+"**MainMapView.place.city**" = "City";
+"**MainMapView.place.address**" = "Address";
+
+"**MainMapView.location.latitude**" = "Latitude";
+"**MainMapView.location.longitude**" = "Longitude";
+
+"**MainMapView.resourceAttributes.type**" = "Type";
+"**MainMapView.resourceAttributes.model**" = "Model";
+"**MainMapView.resourceAttributes.licensePlate**" = "License plate";
+"**MainMapView.resourceAttributes.engineType**" = "Engine type";
+"**MainMapView.resourceAttributes.seats**" = "Seats";
+"**MainMapView.resourceAttributes.station**" = "Station";
+"**MainMapView.resourceAttributes.availableResources**" = "Available resources";
+"**MainMapView.resourceAttributes.spacesAvailable**" = "Available spaces";
+"**MainMapView.resourceAttributes.bikesAvailable**" = "Available bikes";
+"**MainMapView.resourceAttributes.allowDropOff**" = "Allow drop off";
+"**MainMapView.resourceAttributes.pricePerMinuteParking**" = "Price per minute parking";
+"**MainMapView.resourceAttributes.pricePerMinuteDriving**" = "Price per minute driving";
+"**MainMapView.resourceAttributes.helmets**" = "Helmets";

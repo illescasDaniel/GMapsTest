@@ -1,0 +1,7 @@
+strings:
+  inputs: "../GMapsTest/en.lproj"
+  filter: .+\.strings$
+  outputs:
+    - templatePath: "./structured-swift5.stencil"
+      output: "../GMapsTest/Common/L10n.swift"
+      

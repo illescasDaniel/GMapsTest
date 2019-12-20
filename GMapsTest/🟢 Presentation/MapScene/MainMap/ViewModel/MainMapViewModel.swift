@@ -36,73 +36,75 @@ struct DefaultMainMapViewModel: MainMapViewModel {
 		var addedAttributes = 0
 		let detailAttributedString = NSMutableAttributedString()
 
+		typealias l10n = L10n.MainMapView.ResourceAttributes
+
 		if let resourceType = mapResource.resourceType, !resourceType.isEmpty {
-			detailAttributedString.append(bold("Type: "))
+			detailAttributedString.append(bold("\(l10n.type): "))
 			detailAttributedString.append(normal(resourceType+"\n"))
 			addedAttributes += 1
 		}
 		if let model = mapResource.model, !model.isEmpty {
-			detailAttributedString.append(bold("Model: "))
+			detailAttributedString.append(bold("\(l10n.model): "))
 			detailAttributedString.append(normal(model+"\n"))
 			addedAttributes += 1
 		}
 		if let licencePlate = mapResource.licencePlate, !licencePlate.isEmpty {
-			detailAttributedString.append(bold("License plate: "))
+			detailAttributedString.append(bold("\(l10n.licensePlate): "))
 			detailAttributedString.append(normal(licencePlate+"\n"))
 			addedAttributes += 1
 		}
 		if let engineType = mapResource.engineType, !engineType.isEmpty {
-			detailAttributedString.append(bold("Engine type: "))
+			detailAttributedString.append(bold("\(l10n.engineType): "))
 			detailAttributedString.append(normal(engineType+"\n"))
 			addedAttributes += 1
 		}
 		if let seats = mapResource.seats {
-			detailAttributedString.append(bold("Seats: "))
+			detailAttributedString.append(bold("\(l10n.seats): "))
 			detailAttributedString.append(normal(String(seats)+"\n"))
 			addedAttributes += 1
 		}
 
 		if let station = mapResource.station {
-			detailAttributedString.append(bold("Station: "))
+			detailAttributedString.append(bold("\(l10n.station): "))
 			detailAttributedString.append(normal((station ? "Yes" : "No") + "\n"))
 			addedAttributes += 1
 		}
 		if let availableResources = mapResource.availableResources {
-			detailAttributedString.append(bold("Available resources: "))
+			detailAttributedString.append(bold("\(l10n.availableResources): "))
 			detailAttributedString.append(normal(String(availableResources)+"\n"))
 			addedAttributes += 1
 		}
 		if let spacesAvailable = mapResource.spacesAvailable {
-			detailAttributedString.append(bold("Spaces available: "))
+			detailAttributedString.append(bold("\(l10n.spacesAvailable): "))
 			detailAttributedString.append(normal(String(spacesAvailable)+"\n"))
 			addedAttributes += 1
 		}
 
 		if let bikesAvailable = mapResource.bikesAvailable {
-			detailAttributedString.append(bold("Bikes available: "))
+			detailAttributedString.append(bold("\(l10n.bikesAvailable): "))
 			detailAttributedString.append(normal(String(bikesAvailable)+"\n"))
 			addedAttributes += 1
 		}
 
 		if let allowDropOff = mapResource.allowDropOff {
-			detailAttributedString.append(bold("Allow drop off: "))
+			detailAttributedString.append(bold("\(l10n.allowDropOff): "))
 			detailAttributedString.append(normal((allowDropOff ? "Yes" : "No") + "\n"))
 			addedAttributes += 1
 		}
 
 		if let pricePerMinuteParking = mapResource.pricePerMinuteParking {
-			detailAttributedString.append(bold("PPM Parking: "))
+			detailAttributedString.append(bold("\(l10n.pricePerMinuteParking): "))
 			detailAttributedString.append(normal(String(pricePerMinuteParking) + "\n"))
 			addedAttributes += 1
 		}
-		if let pricePerMinuteDriving = mapResource.pricePerMinuteParking {
-			detailAttributedString.append(bold("PPM Driving: "))
+		if let pricePerMinuteDriving = mapResource.pricePerMinuteDriving {
+			detailAttributedString.append(bold("\(l10n.pricePerMinuteDriving): "))
 			detailAttributedString.append(normal(String(pricePerMinuteDriving) + "\n"))
 			addedAttributes += 1
 		}
 
 		if let helmets = mapResource.helmets {
-			detailAttributedString.append(bold("Helmets: "))
+			detailAttributedString.append(bold("\(l10n.helmets): "))
 			detailAttributedString.append(normal(String(helmets)+"\n"))
 			addedAttributes += 1
 		}

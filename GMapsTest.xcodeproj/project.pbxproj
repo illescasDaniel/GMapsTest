@@ -15,6 +15,7 @@
 		6516417F23ABDFD90086DF82 /* MarkerDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6516417823ABDFD90086DF82 /* MarkerDetailView.xib */; };
 		6516418023ABDFD90086DF82 /* MarkerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516417923ABDFD90086DF82 /* MarkerDetailView.swift */; };
 		6516418123ABDFD90086DF82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6516417A23ABDFD90086DF82 /* Main.storyboard */; };
+		6516418A23AD3D1C0086DF82 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6516418C23AD3D1C0086DF82 /* Localizable.strings */; };
 		6585C69123A93F6200130712 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69023A93F6200130712 /* AppDelegate.swift */; };
 		6585C69323A93F6200130712 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C69223A93F6200130712 /* SceneDelegate.swift */; };
 		6585C69A23A93F6600130712 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6585C69923A93F6600130712 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		6585C6F523AA8AAD00130712 /* MapSceneDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6585C6F423AA8AAD00130712 /* MapSceneDependencies.swift */; };
 		B02F10B0CE80377021D144CC /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B02F14AC976BDC57039F8540 /* .gitkeep */; };
 		B02F134E47DE4ABDF365368D /* MapClusterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F15ADAAA9B9C0DF631BB0 /* MapClusterRenderer.swift */; };
+		B02F1B07E24732CEECAE3F1D /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F14DF5137F8BC33988060 /* L10n.swift */; };
 		B02F1BD934572424BB4382A0 /* MapClusterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F1B2D2A0F2A0655027188 /* MapClusterItem.swift */; };
 		B02F1FF8B9DF832C719EF2D7 /* MapResourceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F19009DC63690AF8E2023 /* MapResourceMarker.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +58,10 @@
 		6516417923ABDFD90086DF82 /* MarkerDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerDetailView.swift; sourceTree = "<group>"; };
 		6516417B23ABDFD90086DF82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6516418323AD1E090086DF82 /* GMapsTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GMapsTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		6516418623AD3CF70086DF82 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		6516418723AD3CF70086DF82 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6516418B23AD3D1C0086DF82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6516418D23AD3D1E0086DF82 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6585C68D23A93F6200130712 /* GMapsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GMapsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6585C69023A93F6200130712 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6585C69223A93F6200130712 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 		9FA3C87A1A42A84444085FB0 /* Pods-GMapsTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GMapsTestTests.debug.xcconfig"; path = "Target Support Files/Pods-GMapsTestTests/Pods-GMapsTestTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A25334346027F5DC137590BB /* Pods-GMapsTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GMapsTest.debug.xcconfig"; path = "Target Support Files/Pods-GMapsTest/Pods-GMapsTest.debug.xcconfig"; sourceTree = "<group>"; };
 		B02F14AC976BDC57039F8540 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = file.gitkeep; path = .gitkeep; sourceTree = "<group>"; };
+		B02F14DF5137F8BC33988060 /* L10n.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		B02F15ADAAA9B9C0DF631BB0 /* MapClusterRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapClusterRenderer.swift; sourceTree = "<group>"; };
 		B02F19009DC63690AF8E2023 /* MapResourceMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapResourceMarker.swift; sourceTree = "<group>"; };
 		B02F1B2D2A0F2A0655027188 /* MapClusterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapClusterItem.swift; sourceTree = "<group>"; };
@@ -207,6 +214,7 @@
 				6585C69B23A93F6600130712 /* LaunchScreen.storyboard */,
 				6585C69E23A93F6600130712 /* Info.plist */,
 				6516418323AD1E090086DF82 /* GMapsTest-Bridging-Header.h */,
+				6516418C23AD3D1C0086DF82 /* Localizable.strings */,
 			);
 			path = GMapsTest;
 			sourceTree = "<group>";
@@ -262,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				6585C6B823A9433400130712 /* BetterLogger.swift */,
+				B02F14DF5137F8BC33988060 /* L10n.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -437,6 +446,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = 6585C68423A93F6200130712;
 			productRefGroup = 6585C68E23A93F6200130712 /* Products */;
@@ -455,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6585C69D23A93F6600130712 /* LaunchScreen.storyboard in Resources */,
+				6516418A23AD3D1C0086DF82 /* Localizable.strings in Resources */,
 				6516418123ABDFD90086DF82 /* Main.storyboard in Resources */,
 				6516417F23ABDFD90086DF82 /* MarkerDetailView.xib in Resources */,
 				6585C69A23A93F6600130712 /* Assets.xcassets in Resources */,
@@ -561,6 +572,7 @@
 				B02F1FF8B9DF832C719EF2D7 /* MapResourceMarker.swift in Sources */,
 				B02F1BD934572424BB4382A0 /* MapClusterItem.swift in Sources */,
 				B02F134E47DE4ABDF365368D /* MapClusterRenderer.swift in Sources */,
+				B02F1B07E24732CEECAE3F1D /* L10n.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,14 +599,25 @@
 			isa = PBXVariantGroup;
 			children = (
 				6516417B23ABDFD90086DF82 /* Base */,
+				6516418623AD3CF70086DF82 /* es */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6516418C23AD3D1C0086DF82 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6516418B23AD3D1C0086DF82 /* en */,
+				6516418D23AD3D1E0086DF82 /* es */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		6585C69B23A93F6600130712 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6585C69C23A93F6600130712 /* Base */,
+				6516418723AD3CF70086DF82 /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -606,6 +629,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -666,6 +690,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

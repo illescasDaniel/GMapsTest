@@ -33,7 +33,7 @@ class MainMapViewController: UIViewController {
 
 	// If `companyZoneID` was a discrete value, I could easily map all possible values to different colors
 	// but I don't know all the possible values of it
-	private let markerColors: [UIColor] = [.red, .green, .blue, .yellow, .brown, .cyan, .purple, .gray, .orange]
+	private let markerColors: [UIColor] = [.red, .green, .blue, .yellow, .brown, .cyan, .purple, .gray, .orange, .white, .magenta]
 	private lazy var currentMarkerColorIterator = markerColors.makeIterator()
 	private var colorGivenACompanyZoneId: [Int: UIColor] = [:]
 
@@ -111,21 +111,23 @@ class MainMapViewController: UIViewController {
 				upperRight: visibleRegionCorners.farRight
 			)),
 			completionHandler: {
+				switch $0 {
+				case .success(let response):
+					DispatchQueue.main.async {
+						for mapResource in response.mapResource {
+							let position = LocationCoordinate(latitude: mapResource.y, longitude: mapResource.x)
 
-				guard let mapResources = (try? $0.get())?.mapResource else { return }
-
-				DispatchQueue.main.async {
-					for mapResource in mapResources {
-						let position = LocationCoordinate(latitude: mapResource.y, longitude: mapResource.x)
-
-						if !self.clusterItems.contains(where: { $0.position == position}) {
-							let item = MapClusterItem(position: position, name: mapResource.name)
-							item.mapResource = mapResource
-							self.clusterItems.append(item)
-							self.clusterManager.add(item)
+							if !self.clusterItems.contains(where: { $0.position == position}) {
+								let item = MapClusterItem(position: position, name: mapResource.name)
+								item.mapResource = mapResource
+								self.clusterItems.append(item)
+								self.clusterManager.add(item)
+							}
 						}
+						self.clusterManager.cluster()
 					}
-					self.clusterManager.cluster()
+				case .failure(let error):
+					log.error(error, context: ["Input parameters": visibleRegionCorners])	
 				}
 			}
 		)
@@ -183,21 +185,23 @@ extension MainMapViewController: CLLocationManagerDelegate {
 			guard let firstResult = response.firstResult() else {
 				return
 			}
-			
+
+			typealias l10n = L10n.MainMapView.Place
+
 			let attributedString = NSMutableAttributedString()
-			attributedString.append(NSAttributedString(string: "Place: ", attributes: [
+			attributedString.append(NSAttributedString(string: "\(l10n.place): ", attributes: [
 				.font: UIFont.boldSystemFont(ofSize: 16)
 			]))
 			attributedString.append(NSAttributedString(string: "\(firstResult.country ?? "?") - \(firstResult.administrativeArea ?? "")", attributes: [
 				.font: UIFont.systemFont(ofSize: 15)
 			]))
-			attributedString.append(NSAttributedString(string: "\nCity: ", attributes: [
+			attributedString.append(NSAttributedString(string: "\n\(l10n.city): ", attributes: [
 				.font: UIFont.boldSystemFont(ofSize: 16)
 			]))
 			attributedString.append(NSAttributedString(string: "\(firstResult.locality ?? "?")", attributes: [
 				.font: UIFont.systemFont(ofSize: 15)
 			]))
-			attributedString.append(NSAttributedString(string: "\nAddress: ", attributes: [
+			attributedString.append(NSAttributedString(string: "\n\(l10n.address): ", attributes: [
 				.font: UIFont.boldSystemFont(ofSize: 16)
 			]))
 			attributedString.append(NSAttributedString(string: "\(firstResult.lines?.first ?? "?")", attributes: [
@@ -209,15 +213,17 @@ extension MainMapViewController: CLLocationManagerDelegate {
 	}
 	
 	private func updateCurrentLocationLabel(currentCoordinate: LocationCoordinate) {
+
+		typealias l10n = L10n.MainMapView.Location
 		
 		let attributedString = NSMutableAttributedString()
-		attributedString.append(NSAttributedString(string: "Latitude: ", attributes: [
+		attributedString.append(NSAttributedString(string: "\(l10n.latitude): ", attributes: [
 			.font: UIFont.boldSystemFont(ofSize: 16)
 		]))
 		attributedString.append(NSAttributedString(string: "\(currentCoordinate.latitude)º", attributes: [
 			.font: UIFont.systemFont(ofSize: 15)
 		]))
-		attributedString.append(NSAttributedString(string: "\nLongitude: ", attributes: [
+		attributedString.append(NSAttributedString(string: "\n\(l10n.longitude): ", attributes: [
 			.font: UIFont.boldSystemFont(ofSize: 16)
 		]))
 		attributedString.append(NSAttributedString(string: "\(currentCoordinate.longitude)º", attributes: [
@@ -288,7 +294,10 @@ extension MainMapViewController: GMUClusterManagerDelegate {
 // MARK: GMUClusterRendererDelegate
 extension MainMapViewController: GMUClusterRendererDelegate {
 	func renderer(_ renderer: GMUClusterRenderer, markerFor object: Any) -> GMSMarker? {
-		guard let clusterItem = object as? MapClusterItem, let mapResource = clusterItem.mapResource else { return nil }
+		guard let clusterItem = object as? MapClusterItem, let mapResource = clusterItem.mapResource else {
+			log.warning("Drawn marker is not of type \(MapClusterItem.self)")
+			return nil
+		}
 		let marker = MapResourceMarker()
 		self.setupMarkerInfo(marker: marker, mapResource: mapResource)
 		return marker
