@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Keys
 import GoogleMaps
 
 var log: BetterLogger { .default }
@@ -40,4 +39,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		GMSServices.provideAPIKey(GMapsTestKeys().gMapsTestKey)
 	}
 }
-

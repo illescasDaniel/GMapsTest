@@ -22,7 +22,7 @@ class MainMapViewController: UIViewController {
 	private let viewModel: MainMapViewModel = MapSceneDependencies.makeMainMapViewModel()
 	
 	private lazy var locationManager = CLLocationManager()
-	private var markers: [GMSMarker] = []
+	private var clusterItems: [MapClusterItem] = []
 	private var lastKnownCoordinate: LocationCoordinate?
 	private var lastKnownVisibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)?
 	
@@ -35,6 +35,24 @@ class MainMapViewController: UIViewController {
 	]
 	private lazy var currentMarkerColorIterator = markerColors.makeIterator()
 	private var colorGivenACompanyZoneId: [Int: UIColor] = [:]
+
+	private lazy var clusterManager: GMUClusterManager = {
+		let iconGenerator = GMUDefaultClusterIconGenerator()
+		let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+		let renderer = MapClusterRenderer(
+			mapView: mapView,
+			clusterIconGenerator: iconGenerator
+		)
+		renderer.delegate = self
+		return GMUClusterManager(
+			map: mapView,
+			algorithm: algorithm,
+			renderer: renderer
+		)
+	}()
+
+	// lisboa
+	let initialCoordinates = LocationCoordinate(latitude: 38.711046, longitude: -9.160096)
 	
 	// MARK: Life cycle
 	
@@ -43,8 +61,10 @@ class MainMapViewController: UIViewController {
 		setupView()
 		setupGoogleMaps()
 		setupLocationManager()
+
+		loadMarkersForVisibleRegion()
 	}
-	
+
 	deinit {
 		observers.forEach {
 			$0.invalidate()
@@ -65,10 +85,11 @@ class MainMapViewController: UIViewController {
 	}
 	
 	private func setupGoogleMapsView() {
-		// todo: put this elsewhere
-		let lisboa = LocationCoordinate(latitude: 38.711046, longitude: -9.160096)
-		
-		let camera = GMSCameraPosition.camera(withLatitude: lisboa.latitude, longitude: lisboa.longitude, zoom: 13)
+		let camera = GMSCameraPosition.camera(
+			withLatitude: initialCoordinates.latitude,
+			longitude: initialCoordinates.longitude,
+			zoom: 13
+		)
 		mapView.camera = camera
 		mapView.delegate = self
 	}
@@ -78,17 +99,8 @@ class MainMapViewController: UIViewController {
 		mapView.isMyLocationEnabled = true
 		mapView.settings.myLocationButton = true
 		mapView.settings.compassButton = true
-		
-		observers.append(self.mapView.observe(\.camera, options: [.initial, .new]) { (mapView, change) in
-			guard change.oldValue /* initial */ ?? change.newValue != nil else { return }
-			
-			let visibleRegion = self.mapView.projection.visibleRegion()
-			let visibleRegionCorners = (visibleRegion.nearLeft, visibleRegion.farRight)
-			if self.lastKnownVisibleRegionCorners == nil || self.lastKnownVisibleRegionCorners! != visibleRegionCorners {
-				self.lastKnownVisibleRegionCorners = visibleRegionCorners
-				self.loadMarkers(visibleRegionCorners: visibleRegionCorners)
-			}
-		})
+
+		clusterManager.setDelegate(self, mapDelegate: self)
 	}
 	
 	private func setupLocationManager() {
@@ -100,51 +112,31 @@ class MainMapViewController: UIViewController {
 	}
 	
 	//
-	
-	// todo: filter?? make clusters?
 
 	// load markers as the map viewport changes
 	private func loadMarkers(visibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)) {
 
-		var newMarkers: [GMSMarker] = []
-		
 		self.viewModel.fetchMapResources(
 			input: .init(mapFrame: MapFrame(
 				lowerLeft: visibleRegionCorners.nearLeft,
 				upperRight: visibleRegionCorners.farRight
 			)),
 			completionHandler: {
-				
-				guard let mapResources = (try? $0.get())?.mapResource else { return }
-				
-				// todo: what's the difference between the service response parameters:
-				// "x","y" vs "lon","lat" parameters
 
-				// todo: just testing some resources!!, if I choose to display ALL of them it lags, because they are
-				// a lot, I'll need to use markers clustering !
-				let first10MapResources = mapResources.count > 10 ? Array(mapResources[0..<10]) : mapResources
-				let last10MapResources = mapResources.count > 10 ? Array(mapResources[(mapResources.count-10)...]) : mapResources
-				let someMapResources = first10MapResources + last10MapResources
-				
-				DispatchQueue.concurrentPerform(iterations: someMapResources.count) { (index) in
-					DispatchQueue.main.async {
-						let mapResource = someMapResources[index]
-						let position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
-						guard !self.markers.contains(where: { $0.position == position}) else { return }
-						let marker = MapResourceMarker()
-						marker.position = CLLocationCoordinate2D(latitude: mapResource.y, longitude: mapResource.x)
-						self.setupMarkerInfo(marker: marker, mapResource: mapResource)
-						newMarkers.append(marker)
-					}
-				}
+				guard let mapResources = (try? $0.get())?.mapResource else { return }
 
 				DispatchQueue.main.async {
-					for (i, marker) in newMarkers.enumerated() {
-						DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(20 * i)) {
-							marker.map = self.mapView
+					for mapResource in mapResources {
+						let position = LocationCoordinate(latitude: mapResource.y, longitude: mapResource.x)
+
+						if !self.clusterItems.contains(where: { $0.position == position}) {
+							let item = MapClusterItem(position: position, name: mapResource.name)
+							item.mapResource = mapResource
+							self.clusterItems.append(item)
+							self.clusterManager.add(item)
 						}
 					}
-					self.markers += newMarkers
+					self.clusterManager.cluster()
 				}
 			}
 		)
@@ -169,6 +161,7 @@ class MainMapViewController: UIViewController {
 }
 
 extension MainMapViewController: CLLocationManagerDelegate {
+
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		
 		let lastCoordinate = manager.location?.coordinate
@@ -182,16 +175,6 @@ extension MainMapViewController: CLLocationManagerDelegate {
 		
 		updateCurrentPlaceLabel(currentCoordinate: currentCoordinate)
 		updateCurrentLocationLabel(currentCoordinate: currentCoordinate)
-		
-		// follows last user location
-		
-		//guard let lastLocation = locations.last else { return }
-		//		let camera = GMSCameraPosition.camera(
-		//			withLatitude: lastLocation.coordinate.latitude,
-		//			longitude: lastLocation.coordinate.longitude,
-		//			zoom: mapView.camera.zoom
-		//		)
-		//		mapView.camera = camera
 	}
 	
 	private func updateCurrentPlaceLabel(currentCoordinate: LocationCoordinate) {
@@ -255,22 +238,20 @@ extension MainMapViewController: CLLocationManagerDelegate {
 
 extension MainMapViewController: GMSMapViewDelegate {
 
-	private func bold(_ string: String) -> NSAttributedString {
-		return NSAttributedString(
-			string: string,
-			attributes: [
-				.font: UIFont.preferredFont(forTextStyle: .headline)
-			]
-		)
+	func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+		// checking this flag avoids markers reload (network call) when tapping on one to see its detail
+		if gesture {
+			loadMarkersForVisibleRegion()
+		}
 	}
 
-	private func normal(_ string: String) -> NSAttributedString {
-		return NSAttributedString(
-			string: string,
-			attributes: [
-				.font: UIFont.preferredFont(forTextStyle: .body)
-			]
-		)
+	private func loadMarkersForVisibleRegion() {
+		let visibleRegion = self.mapView.projection.visibleRegion()
+		let visibleRegionCorners = (visibleRegion.nearLeft, visibleRegion.farRight)
+		if self.lastKnownVisibleRegionCorners == nil || self.lastKnownVisibleRegionCorners! != visibleRegionCorners {
+			self.lastKnownVisibleRegionCorners = visibleRegionCorners
+			self.loadMarkers(visibleRegionCorners: visibleRegionCorners)
+		}
 	}
 
 	func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
@@ -362,5 +343,43 @@ extension MainMapViewController: GMSMapViewDelegate {
 			customMarkerDetailView?.bodyLabel.isHidden = false
 		}
 		return customMarkerDetailView
+	}
+
+	private func bold(_ string: String) -> NSAttributedString {
+		return NSAttributedString(
+				string: string,
+				attributes: [
+					.font: UIFont.preferredFont(forTextStyle: .headline)
+				]
+		)
+	}
+
+	private func normal(_ string: String) -> NSAttributedString {
+		return NSAttributedString(
+				string: string,
+				attributes: [
+					.font: UIFont.preferredFont(forTextStyle: .body)
+				]
+		)
+	}
+}
+
+extension MainMapViewController: GMUClusterManagerDelegate {
+	func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+		let newCamera = GMSCameraPosition.camera(
+			withTarget: cluster.position,
+			zoom: mapView.camera.zoom + 1
+		)
+		let update = GMSCameraUpdate.setCamera(newCamera)
+		mapView.moveCamera(update)
+		return true
+	}
+}
+extension MainMapViewController: GMUClusterRendererDelegate {
+	func renderer(_ renderer: GMUClusterRenderer, markerFor object: Any) -> GMSMarker? {
+		guard let clusterItem = object as? MapClusterItem, let mapResource = clusterItem.mapResource else { return nil }
+		let marker = MapResourceMarker()
+		self.setupMarkerInfo(marker: marker, mapResource: mapResource)
+		return marker
 	}
 }
