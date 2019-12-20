@@ -20,59 +20,35 @@ class MainMapViewController: UIViewController {
 	// MARK: Properties
 	
 	private let viewModel: MainMapViewModel = MapSceneDependencies.makeMainMapViewModel()
+
+	// lisboa
+	private let initialCoordinates = LocationCoordinate(latitude: 38.711046, longitude: -9.160096)
 	
 	private lazy var locationManager = CLLocationManager()
+	private lazy var clusterManager: GMUClusterManager = clusterManagerInstance()
+
 	private var clusterItems: [MapClusterItem] = []
 	private var lastKnownCoordinate: LocationCoordinate?
 	private var lastKnownVisibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)?
-	
-	private var observers: [NSKeyValueObservation] = []
 
 	// If `companyZoneID` was a discrete value, I could easily map all possible values to different colors
 	// but I don't know all the possible values of it
-	private let markerColors: [UIColor] = [
-		.red, .green, .blue, .yellow, .brown, .cyan
-	]
+	private let markerColors: [UIColor] = [.red, .green, .blue, .yellow, .brown, .cyan, .purple, .gray, .orange]
 	private lazy var currentMarkerColorIterator = markerColors.makeIterator()
 	private var colorGivenACompanyZoneId: [Int: UIColor] = [:]
 
-	private lazy var clusterManager: GMUClusterManager = {
-		let iconGenerator = GMUDefaultClusterIconGenerator()
-		let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-		let renderer = MapClusterRenderer(
-			mapView: mapView,
-			clusterIconGenerator: iconGenerator
-		)
-		renderer.delegate = self
-		return GMUClusterManager(
-			map: mapView,
-			algorithm: algorithm,
-			renderer: renderer
-		)
-	}()
-
-	// lisboa
-	let initialCoordinates = LocationCoordinate(latitude: 38.711046, longitude: -9.160096)
-	
 	// MARK: Life cycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		setupView()
+		setupViews()
 		setupGoogleMaps()
 		setupLocationManager()
 
 		loadMarkersForVisibleRegion()
 	}
-
-	deinit {
-		observers.forEach {
-			$0.invalidate()
-		}
-		observers.removeAll()
-	}
 	
-	private func setupView() {
+	private func setupViews() {
 		
 		setupGoogleMapsView()
 		
@@ -102,6 +78,21 @@ class MainMapViewController: UIViewController {
 
 		clusterManager.setDelegate(self, mapDelegate: self)
 	}
+
+	private func clusterManagerInstance() -> GMUClusterManager {
+		let iconGenerator = GMUDefaultClusterIconGenerator()
+		let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+		let renderer = MapClusterRenderer(
+			mapView: mapView,
+			clusterIconGenerator: iconGenerator
+		)
+		renderer.delegate = self
+		return GMUClusterManager(
+			map: mapView,
+			algorithm: algorithm,
+			renderer: renderer
+		)
+	}
 	
 	private func setupLocationManager() {
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -110,8 +101,6 @@ class MainMapViewController: UIViewController {
 		locationManager.startUpdatingLocation()
 		locationManager.delegate = self
 	}
-	
-	//
 
 	// load markers as the map viewport changes
 	private func loadMarkers(visibleRegionCorners: (nearLeft: LocationCoordinate, farRight: LocationCoordinate)) {
@@ -160,6 +149,9 @@ class MainMapViewController: UIViewController {
 	}
 }
 
+// MARK: - Delegates
+
+// MARK: CLLocationManagerDelegate
 extension MainMapViewController: CLLocationManagerDelegate {
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -236,6 +228,7 @@ extension MainMapViewController: CLLocationManagerDelegate {
 	}
 }
 
+// MARK: GMSMapViewDelegate
 extension MainMapViewController: GMSMapViewDelegate {
 
 	func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
@@ -255,115 +248,31 @@ extension MainMapViewController: GMSMapViewDelegate {
 	}
 
 	func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+
 		guard let marker = marker as? MapResourceMarker, let mapResource = marker.mapResource else { return nil }
 
-		var things = 0
-		let detailAttributedString = NSMutableAttributedString()
-
-		if let resourceType = mapResource.resourceType, !resourceType.isEmpty {
-			detailAttributedString.append(bold("Type: "))
-			detailAttributedString.append(normal(resourceType+"\n"))
-			things += 1
-		}
-		if let model = mapResource.model, !model.isEmpty {
-			detailAttributedString.append(bold("Model: "))
-			detailAttributedString.append(normal(model+"\n"))
-			things += 1
-		}
-		if let licencePlate = mapResource.licencePlate, !licencePlate.isEmpty {
-			detailAttributedString.append(bold("License plate: "))
-			detailAttributedString.append(normal(licencePlate+"\n"))
-			things += 1
-		}
-		if let engineType = mapResource.engineType, !engineType.isEmpty {
-			detailAttributedString.append(bold("Engine type: "))
-			detailAttributedString.append(normal(engineType+"\n"))
-			things += 1
-		}
-		if let seats = mapResource.seats {
-			detailAttributedString.append(bold("Seats: "))
-			detailAttributedString.append(normal(String(seats)+"\n"))
-			things += 1
-		}
-
-		if let station = mapResource.station {
-			detailAttributedString.append(bold("Station: "))
-			detailAttributedString.append(normal((station ? "Yes" : "No") + "\n"))
-			things += 1
-		}
-		if let availableResources = mapResource.availableResources {
-			detailAttributedString.append(bold("Available resources: "))
-			detailAttributedString.append(normal(String(availableResources)+"\n"))
-			things += 1
-		}
-		if let spacesAvailable = mapResource.spacesAvailable {
-			detailAttributedString.append(bold("Spaces available: "))
-			detailAttributedString.append(normal(String(spacesAvailable)+"\n"))
-			things += 1
-		}
-
-		if let bikesAvailable = mapResource.bikesAvailable {
-			detailAttributedString.append(bold("Bikes available: "))
-			detailAttributedString.append(normal(String(bikesAvailable)+"\n"))
-			things += 1
-		}
-
-		if let allowDropOff = mapResource.allowDropOff {
-			detailAttributedString.append(bold("Allow drop off: "))
-			detailAttributedString.append(normal((allowDropOff ? "Yes" : "No") + "\n"))
-			things += 1
-		}
-
-		if let pricePerMinuteParking = mapResource.pricePerMinuteParking {
-			detailAttributedString.append(bold("PPM Parking: "))
-			detailAttributedString.append(normal(String(pricePerMinuteParking) + "\n"))
-			things += 1
-		}
-		if let pricePerMinuteDriving = mapResource.pricePerMinuteParking {
-			detailAttributedString.append(bold("PPM Driving: "))
-			detailAttributedString.append(normal(String(pricePerMinuteDriving) + "\n"))
-			things += 1
-		}
-
-		if let helmets = mapResource.helmets {
-			detailAttributedString.append(bold("Helmets: "))
-			detailAttributedString.append(normal(String(helmets)+"\n"))
-			things += 1
-		}
+		let (addedParameters, detailAttributedString) = viewModel.mapResourceAttributedString(
+			marker: marker,
+			mapResource: mapResource
+		)
 
 		let width = self.view.frame.size.width
 		let customMarkerDetailView = MarkerDetailView.create(
-			withBounds: CGRect(x: 0, y: 0, width: width > 450 ? 350 : width * 0.75, height: things < 2 ? 80 : 240),
+			withBounds: CGRect(x: 0, y: 0, width: width > 450 ? 350 : width * 0.75, height: addedParameters < 2 ? 80 : 240),
 			title: marker.title ?? "?",
 			body: detailAttributedString
 		)
-		if things == 0 {
+
+		if addedParameters == 0 {
 			customMarkerDetailView?.bodyLabel.isHidden = true
 		} else {
 			customMarkerDetailView?.bodyLabel.isHidden = false
 		}
 		return customMarkerDetailView
 	}
-
-	private func bold(_ string: String) -> NSAttributedString {
-		return NSAttributedString(
-				string: string,
-				attributes: [
-					.font: UIFont.preferredFont(forTextStyle: .headline)
-				]
-		)
-	}
-
-	private func normal(_ string: String) -> NSAttributedString {
-		return NSAttributedString(
-				string: string,
-				attributes: [
-					.font: UIFont.preferredFont(forTextStyle: .body)
-				]
-		)
-	}
 }
 
+// MARK: GMUClusterManagerDelegate
 extension MainMapViewController: GMUClusterManagerDelegate {
 	func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
 		let newCamera = GMSCameraPosition.camera(
@@ -375,6 +284,8 @@ extension MainMapViewController: GMUClusterManagerDelegate {
 		return true
 	}
 }
+
+// MARK: GMUClusterRendererDelegate
 extension MainMapViewController: GMUClusterRendererDelegate {
 	func renderer(_ renderer: GMUClusterRenderer, markerFor object: Any) -> GMSMarker? {
 		guard let clusterItem = object as? MapClusterItem, let mapResource = clusterItem.mapResource else { return nil }

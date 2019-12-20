@@ -14,10 +14,12 @@ A test app for google maps API.
 ## Screenshots
 [Video](https://github.com/illescasDaniel/GMapsTest/media/GMapsTest.mp4)
 
-<img src="media/Screenshot 1.png" width="200">
-<img src="media/Screenshot 2.png" width="200">
-<img src="media/Screenshot 3.png" width="200">
-<img src="media/Screenshot 4.png" width="200">
+<p float="left">
+  <img src="media/Screenshot 1.png" width="200">
+  <img src="media/Screenshot 2.png" width="200">
+  <img src="media/Screenshot 3.png" width="200">
+  <img src="media/Screenshot 4.png" width="200">
+</p>
 
 ### Extra
 - Architecture: based on Clean Architecture with MVVM (https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)

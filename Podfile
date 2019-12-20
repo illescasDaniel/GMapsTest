@@ -8,8 +8,6 @@ target 'GMapsTest' do
   pod 'Alamofire', '~> 5.0.0-rc.3'
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-  #pod 'GoogleMaps', '~> 3.7.0'
-  #pod 'Google-Maps-iOS-Utils', '~> 2.1.0'
 
   target 'GMapsTestTests' do
     inherit! :search_paths
