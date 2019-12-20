@@ -12,7 +12,7 @@ A test app for google maps API.
 5. Open Xcode & run
 
 ## Screenshots
-[Video](https://github.com/illescasDaniel/GMapsTest/media/GMapsTest.mp4)
+[Video](https://github.com/illescasDaniel/GMapsTest/blob/master/media/GMapsTest.mp4)
 
 <p float="left">
   <img src="media/Screenshot 1.png" width="200">
