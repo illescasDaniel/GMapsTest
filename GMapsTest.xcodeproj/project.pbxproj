@@ -204,9 +204,9 @@
 		6585C68F23A93F6200130712 /* GMapsTest */ = {
 			isa = PBXGroup;
 			children = (
-				6585C6B523A9412D00130712 /* 🟢 Presentation */,
-				6585C6B423A9411F00130712 /* 🟦 Domain */,
-				6585C6B623A9413300130712 /* 🔶 Data */,
+				6585C6B523A9412D00130712 /* Presentation */,
+				6585C6B423A9411F00130712 /* Domain */,
+				6585C6B623A9413300130712 /* Data */,
 				6585C6B323A9409200130712 /* Networking */,
 				6585C6B723A9414700130712 /* Common */,
 				6585C6E323AA862B00130712 /* Application */,
@@ -238,32 +238,32 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		6585C6B423A9411F00130712 /* 🟦 Domain */ = {
+		6585C6B423A9411F00130712 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
 				6585C6C323A950D800130712 /* Entities */,
 				6585C6C423A950DD00130712 /* UseCases */,
 				6585C6C523A950EB00130712 /* Interfaces */,
 			);
-			path = "🟦 Domain";
+			path = Domain;
 			sourceTree = "<group>";
 		};
-		6585C6B523A9412D00130712 /* 🟢 Presentation */ = {
+		6585C6B523A9412D00130712 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				6516416F23ABDFD90086DF82 /* MapScene */,
 			);
-			path = "🟢 Presentation";
+			path = Presentation;
 			sourceTree = "<group>";
 		};
-		6585C6B623A9413300130712 /* 🔶 Data */ = {
+		6585C6B623A9413300130712 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				6585C6DB23A9601400130712 /* Repositories */,
 				6585C6D023A9536B00130712 /* Network */,
 				6585C6DC23A9601C00130712 /* PersistentStorage */,
 			);
-			path = "🔶 Data";
+			path = Data;
 			sourceTree = "<group>";
 		};
 		6585C6B723A9414700130712 /* Common */ = {
