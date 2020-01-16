@@ -49,13 +49,13 @@ public class BetterLogger {
 
 		_file: String = #file, _function: String = #function, _line: Int = #line, _column: Int = #column
 	) {
+		self.listeners[.verbose]?()
 		for handler in self.handlers {
 			handler.log(.init(
 				loggerName: self.name,
 				value: messageOrValue, severity: .verbose, context: context,
 				metadata: .init(file: _file, function: _function, line: _line, column: _column)	
 			))
-			self.listeners[.verbose]?()
 		}
 	}
 	
@@ -65,13 +65,13 @@ public class BetterLogger {
 
 		_file: String = #file, _function: String = #function, _line: Int = #line, _column: Int = #column
 	) {
+		self.listeners[.info]?()
 		for handler in self.handlers {
 			handler.log(.init(
 				loggerName: self.name,
 				value: messageOrValue, severity: .info, context: context,
 				metadata: .init(file: _file, function: _function, line: _line, column: _column)	
 			))
-			self.listeners[.info]?()
 		}
 	}
 	
@@ -81,13 +81,13 @@ public class BetterLogger {
 
 		_file: String = #file, _function: String = #function, _line: Int = #line, _column: Int = #column
 	) {
+		self.listeners[.warning]?()
 		for handler in self.handlers {
 			handler.log(.init(
 				loggerName: self.name,
 				value: messageOrValue, severity: .warning, context: context,
 				metadata: .init(file: _file, function: _function, line: _line, column: _column)	
 			))
-			self.listeners[.warning]?()
 		}
 	}
 	
@@ -97,13 +97,13 @@ public class BetterLogger {
 
 		_file: String = #file, _function: String = #function, _line: Int = #line, _column: Int = #column
 	) {
+		self.listeners[.error]?()
 		for handler in self.handlers {
 			handler.log(.init(
 				loggerName: self.name,
 				value: messageOrValue, severity: .error, context: context,
 				metadata: .init(file: _file, function: _function, line: _line, column: _column)	
 			))
-			self.listeners[.error]?()
 		}
 	}
 	
@@ -113,13 +113,13 @@ public class BetterLogger {
 
 		_file: String = #file, _function: String = #function, _line: Int = #line, _column: Int = #column
 	) {
+		self.listeners[.fatalError]?()
 		for handler in self.handlers {
 			handler.log(.init(
 				loggerName: self.name,
 				value: messageOrValue, severity: .fatalError, context: context,
 				metadata: .init(file: _file, function: _function, line: _line, column: _column)	
 			))
-			self.listeners[.fatalError]?()
 		}
 	}
 	
